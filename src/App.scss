@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // min-height: 100vh;
+  margin: 50px auto;
+}
+
+.wrapper {
+  width: 700px;
+  min-height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+}
