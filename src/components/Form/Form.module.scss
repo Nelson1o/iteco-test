@@ -1,22 +1,33 @@
-.formItem {
+.formItems {
   display: flex;
+  justify-content: center;
   align-items: center;
   column-gap: 10px;
   margin-bottom: 15px;
 
-  .input {
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    padding: 12px 20px;
-    width: 250px;
-    border-radius: 10px;
-    font-size: 16px;
+  .formItem {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
 
-    &:focus {
-      border: 1px solid rgba(0, 0, 0, 0.7);
-    }
+    .input {
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      padding: 12px 20px;
+      width: 250px;
+      border-radius: 10px;
+      font-size: 16px;
+      background-color: rgb(229, 231, 235);
+      transition: all 0.5;
 
-    &:hover {
-      border: 1px solid rgba(0, 0, 0, 0.7);
+      &:focus {
+        // border: 1px solid rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 0, 0, 0.7);
+        background-color: #fff;
+      }
+
+      &:hover {
+        border: 1px solid rgba(0, 0, 0, 0.7);
+      }
     }
   }
 
@@ -27,7 +38,7 @@
     border: 1px solid rgba(0, 0, 0, 1);
     border-radius: 15px;
     cursor: pointer;
-    transition: all 0.25;
+    transition: all ease-in-out 0.25;
 
     svg {
       width: 24px;
@@ -54,5 +65,24 @@
     &:hover {
       background-color: rgb(249, 250, 251);
     }
+  }
+}
+
+.changeForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+  margin-left: 15px;
+  margin-top: 27px;
+}
+
+.select {
+  width: 100px;
+  padding: 5px;
+  border-radius: 8px;
+
+  option {
+    padding: 5px;
   }
 }
