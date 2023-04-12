@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Form from "../Form/Form";
 import Loader from "../Loader";
 
@@ -7,14 +8,14 @@ import styles from "./FormBuilder.module.scss";
 interface IFormState {
   id: number;
   type: string;
-  text: number | string;
+  value: number | string;
 }
 
 const FormBuilder: React.FC = () => {
   const [forms, setForms] = useState<IFormState[]>([]);
 
   const addForm = () => {
-    setForms((prev) => [...prev, { id: Math.random(), type: "text", text: "" }]);
+    setForms((prev) => [...prev, { id: Math.random(), type: "text", value: "" }]);
   };
 
   const removeForm = (id: number) => {
@@ -22,10 +23,12 @@ const FormBuilder: React.FC = () => {
   };
 
   const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+    const value = e.target.name === "checkbox" ? String(e.target.checked) : e.target.value;
+
     setForms((prev) =>
       prev.map((item) => {
         if (item.id === id) {
-          item.text = e.target.value;
+          item.value = value;
         }
         return item;
       })
@@ -60,12 +63,23 @@ const FormBuilder: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(forms);
+    alert(JSON.stringify(forms));
+  };
+
+  const handleOnDragEnd = (result: any) => {
+    if (!result.destination) return;
+
+    const items = Array.from(forms);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setForms(items);
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <div className={styles.buttonItems}>
-        <button className={styles.addButton} /* type="button" */ onClick={addForm}>
+        <button className={styles.addButton} type="button" onClick={addForm}>
           Add
         </button>
         <button className={styles.addButton} type="submit">
@@ -73,19 +87,29 @@ const FormBuilder: React.FC = () => {
         </button>
       </div>
 
-      {forms.length !== 0 ? (
-        forms.map((form) => (
-          <Form
-            key={form.id}
-            removeForm={removeForm}
-            changeTypeForm={changeTypeForm}
-            onChangeValue={onChangeValue}
-            {...form}
-          />
-        ))
-      ) : (
-        <Loader />
-      )}
+      <DragDropContext onDragEnd={handleOnDragEnd}>
+        <Droppable droppableId="items">
+          {(provided) =>
+            forms.length !== 0 ? (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                {forms.map((form, index) => (
+                  <Form
+                    key={form.id}
+                    index={index}
+                    removeForm={removeForm}
+                    changeTypeForm={changeTypeForm}
+                    onChangeValue={onChangeValue}
+                    {...form}
+                  />
+                ))}
+                {provided.placeholder}
+              </div>
+            ) : (
+              <Loader />
+            )
+          }
+        </Droppable>
+      </DragDropContext>
     </form>
   );
 };
