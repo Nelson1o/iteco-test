@@ -44,7 +44,7 @@ const Form: React.FC<TForm> = ({
               onChange={(e) => onChangeValue(e, id)}
               checked={type === "checkbox" && Boolean(value)}
               autoComplete="off"
-              required
+              required={type === "checkbox" ? false : true}
             />
           </div>
 
