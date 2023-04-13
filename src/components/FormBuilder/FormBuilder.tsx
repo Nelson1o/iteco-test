@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
+
 import Form from "../Form/Form";
 import Loader from "../Loader";
 
@@ -62,11 +63,10 @@ const FormBuilder: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(forms);
     alert(JSON.stringify(forms));
   };
 
-  const handleOnDragEnd = (result: any) => {
+  const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
     const items = Array.from(forms);

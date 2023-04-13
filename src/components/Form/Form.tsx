@@ -1,26 +1,27 @@
 import React from "react";
+import { Draggable } from "react-beautiful-dnd";
 
 import styles from "./Form.module.scss";
-import { Draggable } from "react-beautiful-dnd";
 
 type TForm = {
   id: number;
   type: string;
   value: string | number;
+  index: number;
+
   removeForm: (id: number) => void;
   changeTypeForm: (e: React.ChangeEvent<HTMLSelectElement>, id: number) => void;
   onChangeValue: (e: React.ChangeEvent<HTMLInputElement>, id: number) => void;
-  index: number;
 };
 
 const Form: React.FC<TForm> = ({
   id,
   type,
   value,
+  index,
   removeForm,
   changeTypeForm,
   onChangeValue,
-  index,
 }) => {
   return (
     <Draggable draggableId={`card-${id}`} index={index}>
@@ -32,7 +33,7 @@ const Form: React.FC<TForm> = ({
           {...provided.dragHandleProps}
         >
           <div className={styles.formItem}>
-            <label htmlFor={id.toString()}>Full Name</label>
+            <label htmlFor={id.toString()}>Label</label>
             <input
               type={type}
               className={styles.input}
@@ -43,6 +44,7 @@ const Form: React.FC<TForm> = ({
               onChange={(e) => onChangeValue(e, id)}
               checked={type === "checkbox" && Boolean(value)}
               autoComplete="off"
+              required
             />
           </div>
 

@@ -2,6 +2,19 @@
   position: relative;
 }
 
+@media (max-width: 450px) {
+  .form {
+    display: flex;
+    flex-direction: column;
+
+    .buttonItems {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
 .buttonItems {
   display: flex;
   align-items: center;
