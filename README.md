@@ -8,8 +8,9 @@ npm init
 npm start
 ```
 
-Демо -
-![]()
+App demo - [link](https://iteco-test.vercel.app/)
+
+![Main Page](./src/assets/MainPage.png)
 
 ### Technology
 
